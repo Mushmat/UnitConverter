@@ -1,1 +1,1 @@
-Go to master
+Change branch to master, thank you!
