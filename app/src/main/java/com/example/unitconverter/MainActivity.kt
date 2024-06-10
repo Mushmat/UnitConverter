@@ -1,9 +1,11 @@
 package com.example.unitconverter
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,13 +31,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
+import java.time.format.TextStyle
 import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -52,6 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun UnitConverter(){
 
@@ -78,10 +86,11 @@ fun UnitConverter(){
     ) {
 
         //All the UI elements will be stacked below each other
-        Text(text = "Unit Converter")
+        Text(text = "Unit Converter",style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(value = inputValue, onValueChange = {
             inputValue = it
+            convertUnits()
         //Enter something that will be displayed when the main value changes
         },
             label = { Text(text = "Enter Value")})
@@ -132,31 +141,35 @@ fun UnitConverter(){
                     DropdownMenuItem(text = { Text(text = "Centimeters") }, onClick = {
                         oExpanded = false
                         outputUnit = "Centimeters"
-                        conversionFactor.value = 0.01
+                        oConversionFactor.value = 0.01
                         convertUnits() })
                     DropdownMenuItem(text = { Text(text = "Meters") }, onClick = {
                         oExpanded = false
                         outputUnit = "Meters"
-                        conversionFactor.value = 1
+                        oConversionFactor.value = 1.00
                         convertUnits() })
                     DropdownMenuItem(text = { Text(text = "Feet") }, onClick = {
                         oExpanded = false
                         outputUnit = "Feet"
-                        conversionFactor.value = 0.3048
+                        oConversionFactor.value = 0.3048
                         convertUnits() })
                     DropdownMenuItem(text = { Text(text = "Millimeters") }, onClick = {
                         oExpanded = false
                         outputUnit = "Millimeters"
-                        conversionFactor.value = 0.001
+                        oConversionFactor.value = 0.001
                         convertUnits() })
                 }
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Result: ")
+        Text(text = "Result: $outputValue $outputUnit",
+            style = MaterialTheme.typography.headlineMedium
+            )
+
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun UnitConverterPreview(){
