@@ -62,16 +62,17 @@ class MainActivity : ComponentActivity() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun UnitConverter(){
-
-    var inputValue by remember { mutableStateOf("") }
-    var outputValue by remember { mutableStateOf("") }
-    var inputUnit by remember { mutableStateOf("Meters") }
-    var outputUnit by remember { mutableStateOf("Meters") }
+    //Defining the Mutable State Variables
+    var inputValue by remember { mutableStateOf("") } //The value input by user to convert
+    var outputValue by remember { mutableStateOf("") }  //The output value shown as result
+    var inputUnit by remember { mutableStateOf("Meters") } //Input unit
+    var outputUnit by remember { mutableStateOf("Meters") } //Output Unit
     var iExpanded by remember { mutableStateOf(false) } //Drop down menu open or close
-    var oExpanded by remember { mutableStateOf(false) }
+    var oExpanded by remember { mutableStateOf(false) } //Drop down menu open or close
     val conversionFactor = remember { mutableStateOf(1.00)}
     val oConversionFactor = remember { mutableStateOf(1.00)}
 
+    //Function to convert the units. Logic of the app!
     fun convertUnits(){
         // ?: = elvis operator
         val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
@@ -79,7 +80,9 @@ fun UnitConverter(){
         outputValue = result.toString()
     }
 
+    //THE UI
     Column(
+        // Alignment
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
